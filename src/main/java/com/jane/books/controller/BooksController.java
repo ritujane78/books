@@ -3,9 +3,11 @@ package com.jane.books.controller;
 import com.jane.books.entity.Book;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -30,8 +32,22 @@ public class BooksController {
     }
 
     @GetMapping("/api/books")
-    public List<Book> getBooks(){
-        return books;
+    public List<Book> getBooks(@RequestParam(required = false) String category) {
+        if(category == null){
+            return books;
+        }
+//        List<Book> filteredBooks = new ArrayList<>();
+//        for (Book book: books){
+//            if(book.getCategory().equalsIgnoreCase(category)){
+//                filteredBooks.add(book);
+//            }
+//        }
+//        return filteredBooks;
+
+        return books.stream()
+                .filter(book -> book.getCategory().equalsIgnoreCase(category))
+                .toList();
+
     }
 
     @GetMapping("/api/books/{title}")
