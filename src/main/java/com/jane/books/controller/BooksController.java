@@ -2,6 +2,9 @@ package com.jane.books.controller;
 
 import com.jane.books.entity.Book;
 import com.jane.books.request.BookRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Tag(name = "Books Rest API Endpoints", description = "Operations related to books.")
 @RestController
 @RequestMapping("/api/books")
 public class BooksController {
@@ -34,7 +38,8 @@ public class BooksController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Book> getBooks(@RequestParam(required = false) String category) {
+    @Operation(summary = "Get all books", description = "Retrieve all books")
+    public List<Book> getBooks(@Parameter(description = "Optional query parameter") @RequestParam(required = false) String category) {
         if(category == null){
             return books;
         }
@@ -52,8 +57,10 @@ public class BooksController {
 
     }
 
+    @Operation(summary = "Get a book by id", description = "Retrieve a book by passing its id")
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable @Min(value = 1) long id){
+    public Book getBookById(@Parameter(description = "id of the book to retrieve")@PathVariable @Min(value = 1) long id){
 //        for(Book book: books){
 //            if(book.getId()== id){
 //                return book;
@@ -66,6 +73,7 @@ public class BooksController {
                 .orElse(null));
     }
 
+    @Operation(summary = "Create a book", description = "Store a new book by providing its details.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void addBook(@Valid @RequestBody BookRequest newBook){
@@ -73,9 +81,10 @@ public class BooksController {
         books.add(convertToBook(id, newBook));
     }
 
+    @Operation(summary = "Update a book", description = "Change the content of a book by giving the content and the id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateBook(@PathVariable @Min(value = 1) long id, @Valid @RequestBody BookRequest bookRequest){
+    public void updateBook(@Parameter(description = "id of thr book to update") @PathVariable @Min(value = 1) long id, @Valid @RequestBody BookRequest bookRequest){
         for(int i = 0; i < books.size(); i++){
             if(books.get(i).getId() == id){
                 Book updatedBook = convertToBook(id, bookRequest);
@@ -85,9 +94,10 @@ public class BooksController {
         }
     }
 
+    @Operation(summary = "Delete a book", description = "Delete a book from the list by its id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable @Min(value = 1) long id){
+    public void deleteBook(@Parameter(description = "id of the book to delete") @PathVariable @Min(value = 1) long id){
         books.removeIf(book -> book.getId() == id);
     }
     private Book convertToBook(long id, BookRequest bookRequest){
