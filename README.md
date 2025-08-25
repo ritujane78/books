@@ -3,6 +3,7 @@
 Versions
 Spring Boot - 3.5.4
 Springdoc - 3.7.0
+Java - 21
 
 This project in Spring Boot demonstrates the basic CRUD Operations with REST APIs.
 
