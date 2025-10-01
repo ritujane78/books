@@ -1,18 +1,27 @@
 # Spring Boot Books
 
-Versions
-Spring Boot - 3.5.4
-Springdoc - 3.7.0
-Java - 21
+## Versions
+- **Spring Boot:** 3.5.4
+- **Springdoc:** 3.7.0
+- **Java:** 21
 
-This project in Spring Boot demonstrates the basic CRUD Operations with REST APIs.
+---
 
-Books are Created, Read, Updated and Deleted with API verbs: POST, GET, PUT, DELETE,
+## Project Overview
+This Spring Boot project demonstrates basic **CRUD operations** with REST APIs for managing Books.
 
-Jakarta validations for different data types are implemented.
-Exception Handling is done globally.
+### Features
+- **Create, Read, Update, Delete** Books using API verbs:
+    - `POST` → Create
+    - `GET` → Read
+    - `PUT` → Update
+    - `DELETE` → Delete
+- **Jakarta Validations** implemented for different data types.
+- **Global Exception Handling** for consistent error management.
+- **Swagger UI** integration for API testing and documentation, with:
+    - Descriptions
+    - Summaries  
+      Designed to be easy to use even for first-time users.
+- **Response Status Codes** provided according to request outcomes.
 
-Swagger UI is used for implementing all the CRUD operations. It is made understandable even for anyone who is using it for the first time with descriptions and summaries.
-
-Response status codes are given to the requests according to return type.
-
+---
